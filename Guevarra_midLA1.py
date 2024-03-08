@@ -6,33 +6,45 @@ import re
 class EntryActivity(tk.Tk):
     def __init__(self):
         super().__init__()
-
         self.title("J1T-midLA1")
-        self.geometry("500x500")
-        self.configure(cursor="arrow")
-        self.mainfrm = Frame(self)
-        self.entfrm = Frame(self.mainfrm)
-        self.btnfrm = Frame(self.mainfrm)
-        self.dspfrm = Frame(self.mainfrm)
+        self.geometry("600x500")
+        self.minsize(600, 400)
+        self.font = ("Comic Sans MS", 15, "bold")
+        self.configure(cursor="arrow", background="#6D6875")
+        self.mainfrm = Frame(self, highlightbackground="#FFCDB2", highlightthickness=1.5, borderwidth=20, background="#B5838D")
+        self.entfrm = Frame(self.mainfrm, highlightbackground="#FFCDB2", highlightthickness=1.5, borderwidth=5, background="#E5989B")
+        self.btnfrm = Frame(self.mainfrm, highlightbackground="#FFCDB2", highlightthickness=1.5, borderwidth=5, background="#E5989B")
+        self.dspfrm = Frame(self.mainfrm, highlightbackground="#FFCDB2", highlightthickness=1.5, background="#FFB4A2")
 
         self.nmlbl = Label(self.entfrm,
-                           text = "Lucky Angel")
+                           text = "Lucky Angel",
+                           background="#E5989B",
+                           font= self.font)
         self.entry_text = Entry(self.entfrm,
-                                width=25)
+                                width=25,
+                                font= self.font)
+        self.entry_text.insert(0, "Input a Text")
+        self.entry_text.bind("<FocusIn>", self.temp_text)
         
         self.button_display = Button(self.btnfrm,
                                      text= "Display Text",
                                      cursor="hand2",
-                                     command= self.showentry)
+                                     command= self.showentry,
+                                     background="#FDF0C2",
+                                     font= self.font)
         self.lbldsp = Label(self.dspfrm,
-                            text= "Display")
+                            text= "Display:",
+                            background="#FFB4A2",
+                            font= self.font)
         self.label_txt = Label(self.dspfrm,
-                               text="", wraplength=100)
+                               text="", wraplength=100,
+                               background="#FFB4A2",
+                               font= self.font)
         
-        self.mainfrm.pack(anchor=CENTER, pady=150)
-        self.entfrm.grid()
-        self.btnfrm.grid(column=1, row=1)
-        self.dspfrm.grid(column=2, row=0)
+        self.mainfrm.pack(expand=True)
+        self.entfrm.pack(side=LEFT, expand=True, padx=50)
+        self.btnfrm.pack(side= BOTTOM, expand=True)
+        self.dspfrm.pack(side=RIGHT, expand=True, pady=25)
 
         self.nmlbl.pack()
         self.entry_text.pack()
@@ -52,20 +64,20 @@ class EntryActivity(tk.Tk):
     def buttonhover(self):
        self.button_display.bind("<Enter>", func=lambda e: self.button_display.configure(
            relief= GROOVE,
-           #bd= 5
+           highlightbackground="#FFCDB2"
        ))
        self.button_display.bind("<Leave>", func=lambda e: self.button_display.configure(
            relief= RAISED,
-           #bd= 2
+           highlightbackground="#FFCDB2"
        ))
     def enthover(self):
         self.entry_text.bind("<Enter>", func= lambda e: self.entry_text.configure(
             relief= RIDGE,
-            #bd= 5
+            highlightbackground="#FFCDB2"
         ))
         self.entry_text.bind("<Leave>", func=lambda e:self.entry_text.configure(
             relief= SUNKEN,
-            #bd=2
+            highlightbackground="#FFCDB2"
         ))
     def dsphover(self):
         self.label_txt.bind("<Enter>", func= lambda e: self.label_txt.configure(
@@ -74,6 +86,8 @@ class EntryActivity(tk.Tk):
         self.label_txt.bind("<Leave>", func= lambda e: self.label_txt.configure(
             fg="black"
         ))
+    def temp_text(self, e):
+        self.entry_text.delete(0, "end")
     
 
     
